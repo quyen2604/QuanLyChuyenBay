@@ -1,33 +1,32 @@
 package dao;
 
-import model.SanBayDTO;
+import model.GheDTO;
 import util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SanBayDAO {
+public class GheDAO {
 
-	public List<SanBayDTO> getAllSanBay() {
-	    List<SanBayDTO> list = new ArrayList<>();
-	    String sql = "SELECT * FROM SAN_BAY";
+	public List<GheDTO> getAllGhe() {
+	    List<GheDTO> list = new ArrayList<>();
+	    String sql = "SELECT * FROM GHE";
 	    try (Connection conn = DatabaseConnection.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql);
 	         ResultSet rs = ps.executeQuery()) {
 	        while (rs.next()) {
-	            SanBayDTO sanBay = new SanBayDTO(
-	                rs.getString("MaSB"),
-	                rs.getString("TenSB"),
-	                rs.getString("TinhTP")
+	            GheDTO ghe = new GheDTO(
+	                rs.getString("MaGhe"),
+	                rs.getString("MaMB"),
+	                rs.getString("SoGhe"),
+	                rs.getString("MaLoaiVe")
 	            );
-	            list.add(sanBay);
+	            list.add(ghe);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return list;
 	}
-
-    
 }
