@@ -9,91 +9,17 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import util.DatabaseConnection;
 
 public class CSVLoader {
-
-    // Đường dẫn tĩnh (hardcode) trỏ thẳng tới thư mục CSV
     private static final String CSV_DIR = "C:\\Users\\Trang\\Downloads\\file_csv_CSDL\\";
     private static final Charset CSV_ENCODING = StandardCharsets.UTF_8;
 
-    public static void main(String[] args) {
-        System.out.println("[CSV] Thu muc: " + CSV_DIR);
-        System.out.println("========================================");
-        System.out.println("  BAT DAU LOAD DU LIEU TU CSV");
-        System.out.println("========================================");
-        loadSanBay();                // 1. Không phụ thuộc
-        loadLoaiMayBay();            // 2. Không phụ thuộc
-        loadMayBay();                // 3. Cần LOAI_MAY_BAY
-        loadLoaiVe();                // 4. Không phụ thuộc
-        loadDichVu();                // 5. Không phụ thuộc
-        loadChiTietDichVuLoaiVe();   // 6. Cần LOAI_VE + DICH_VU
-        loadGhe();                   // 7. Cần MAY_BAY + LOAI_VE
-        loadKhachHang();             // 8. Không phụ thuộc
-        loadChuyenBay();             // 9. Cần SAN_BAY + MAY_BAY
-        loadGiaChuyenBay();          // 10. Cần CHUYEN_BAY + LOAI_VE
-        loadHoaDon();                // 11. Cần KHACH_HANG
-        loadVe();                    // 12. Cần CHUYEN_BAY + HOA_DON + GHE
-        System.out.println("========================================");
-        System.out.println("  HOAN THANH LOAD DU LIEU");
-        System.out.println("========================================");
-        JOptionPane.showMessageDialog(null,
-            "Load du lieu hoan thanh!\nKiem tra console de xem chi tiet.");
-    }
-    
-    
-//    private static String CSV_DIR = "";
-//    // ============================================================
-//    // ENTRY POINT – Chạy hàm này để load toàn bộ dữ liệu
-//    // ============================================================
-//    public static void main(String[] args) {
-//        // --- Bước 1: Mở hộp thoại để người dùng chọn thư mục chứa file CSV ---
-//        JFileChooser chooser = new JFileChooser();
-//        chooser.setDialogTitle("Chon thu muc chua cac file CSV");
-//        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        chooser.setAcceptAllFileFilterUsed(false);
-//        int result = chooser.showOpenDialog(null);
-//        if (result != JFileChooser.APPROVE_OPTION) {
-//            JOptionPane.showMessageDialog(null, "Ban da huy. Chuong trinh se dong.");
-//            return;
-//        }
-//        // Lưu đường dẫn, đảm bảo kết thúc bằng dấu \\
-//        File selectedDir = chooser.getSelectedFile();
-//        CSV_DIR = selectedDir.getAbsolutePath();
-//        if (!CSV_DIR.endsWith(File.separator)) {
-//            CSV_DIR += File.separator;
-//        }
-//        System.out.println("[CSV] Thu muc duoc chon: " + CSV_DIR);
-//        System.out.println("========================================");
-//        System.out.println("  BAT DAU LOAD DU LIEU TU CSV");
-//        System.out.println("========================================");
-//        loadSanBay();
-//        loadLoaiMayBay();
-//        loadMayBay();
-//        loadLoaiVe();
-//        loadDichVu();
-//        loadChiTietDichVuLoaiVe();
-//        loadGhe();
-//        loadKhachHang();
-//        loadChuyenBay();
-//        loadGiaChuyenBay();
-//        loadHoaDon();
-//        loadVe();
-//        System.out.println("========================================");
-//        System.out.println("  HOAN THANH LOAD DU LIEU");
-//        System.out.println("========================================");
-//        JOptionPane.showMessageDialog(null, "Load du lieu hoan thanh! Kiem tra console de xem chi tiet.");
-//    }
-    
-    
-    
-    
-    
+
     // ============================================================
     // 1. SAN_BAY – MaSB, TenSB, TinhTP
     // ============================================================
-    private static void loadSanBay() {
+    public static void loadSanBay() {
         String sql = "INSERT INTO SAN_BAY (MaSB, TenSB, TinhTP) VALUES (?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -118,7 +44,7 @@ public class CSVLoader {
     // ============================================================
     // 2. LOAI_MAY_BAY – MaLoai, HangSX
     // ============================================================
-    private static void loadLoaiMayBay() {
+    public static void loadLoaiMayBay() {
         String sql = "INSERT INTO LOAI_MAY_BAY (MaLoai, HangSX) VALUES (?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -142,7 +68,7 @@ public class CSVLoader {
     // ============================================================
     // 3. MAY_BAY – MaMB, TenMayBay, TongSoGhe(int), MaLoai
     // ============================================================
-    private static void loadMayBay() {
+    public static void loadMayBay() {
         String sql = "INSERT INTO MAY_BAY (MaMB, TenMayBay, TongSoGhe, MaLoai) VALUES (?, ?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -168,7 +94,7 @@ public class CSVLoader {
     // ============================================================
     // 4. LOAI_VE – MaLoaiVe, TenLoai
     // ============================================================
-    private static void loadLoaiVe() {
+    public static void loadLoaiVe() {
         String sql = "INSERT INTO LOAI_VE (MaLoaiVe, TenLoai) VALUES (?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -192,7 +118,7 @@ public class CSVLoader {
     // ============================================================
     // 5. DICH_VU – MaDV, TenDichVu, GiaDichVu(decimal)
     // ============================================================
-    private static void loadDichVu() {
+    public static void loadDichVu() {
         String sql = "INSERT INTO DICH_VU (MaDV, TenDichVu, GiaDichVu) VALUES (?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -217,7 +143,7 @@ public class CSVLoader {
     // ============================================================
     // 6. CHITIET_DICHVU_LOAIVE – MaLoaiVe, MaDV, SoLuong(int)
     // ============================================================
-    private static void loadChiTietDichVuLoaiVe() {
+    public static void loadChiTietDichVuLoaiVe() {
         String sql = "INSERT INTO CHITIET_DICHVU_LOAIVE (MaLoaiVe, MaDV, SoLuong) VALUES (?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -242,7 +168,7 @@ public class CSVLoader {
     // ============================================================
     // 7. GHE – MaGhe, MaMB, SoGhe, MaLoaiVe
     // ============================================================
-    private static void loadGhe() {
+    public static void loadGhe() {
         String sql = "INSERT INTO GHE (MaGhe, MaMB, SoGhe, MaLoaiVe) VALUES (?, ?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -269,7 +195,7 @@ public class CSVLoader {
     // 8. KHACH_HANG – MaKH, HoTen, SDT, CCCD, DiaChi
     //    DiaChi có thể chứa dấu phẩy ("Hoàn Kiếm, Hà Nội") → splitCSVWithQuotes
     // ============================================================
-    private static void loadKhachHang() {
+    public static void loadKhachHang() {
         String sql = "INSERT INTO KHACH_HANG (MaKH, HoTen, SDT, CCCD, DiaChi) VALUES (?, ?, ?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -298,7 +224,7 @@ public class CSVLoader {
     //    GioKH  csv: "21:15:00" → truyền thẳng (DB kiểu time hiểu được)
     //    NgayKH csv: "2026-01-08" → truyền thẳng (DB kiểu date hiểu được)
     // ============================================================
-    private static void loadChuyenBay() {
+    public static void loadChuyenBay() {
         String sql = "INSERT INTO CHUYEN_BAY (MaCB, GioKH, NgayKH, SBDen, SBDi, MaMB) "
                    + "VALUES (?, ?, ?, ?, ?, ?)";
         int[] r = {0, 0};
@@ -327,7 +253,7 @@ public class CSVLoader {
     // ============================================================
     // 10. GIA_CHUYEN_BAY – MaCB, MaLoaiVe, GiaTien(decimal)
     // ============================================================
-    private static void loadGiaChuyenBay() {
+    public static void loadGiaChuyenBay() {
         String sql = "INSERT INTO GIA_CHUYEN_BAY (MaCB, MaLoaiVe, GiaTien) VALUES (?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -353,7 +279,7 @@ public class CSVLoader {
     // 11. HOA_DON – MaHoaDon, MaKH, NgayLapHD(date,NOT NULL), ThanhTien(decimal)
     //     NgayLapHD csv: "2026-01-13" → truyền thẳng
     // ============================================================
-    private static void loadHoaDon() {
+    public static void loadHoaDon() {
         String sql = "INSERT INTO HOA_DON (MaHoaDon, MaKH, NgayLapHD, ThanhTien) VALUES (?, ?, ?, ?)";
         int[] r = {0, 0};
         try (Connection conn = DatabaseConnection.getConnection();
@@ -380,7 +306,7 @@ public class CSVLoader {
     // 12. VE – MaVe, MaCB, NgayDatVe(date,NOT NULL), MaHoaDon, NgayNhanVe(date), MaGhe
     //     NgayDatVe, NgayNhanVe csv: "yyyy-MM-dd" → truyền thẳng
     // ============================================================
-    private static void loadVe() {
+    public static void loadVe() {
         String sql = "INSERT INTO VE (MaVe, MaCB, NgayDatVe, MaHoaDon, NgayNhanVe, MaGhe) "
                    + "VALUES (?, ?, ?, ?, ?, ?)";
         int[] r = {0, 0};
