@@ -1,30 +1,29 @@
 package model;
 
-	public class SanBayDTO {
-	    // Encapsulation: Giữ các fields là private
-	    private String maSanBay;
-	    private String tenSanBay;
-	    private String thanhPho;
+public class SanBayDTO {
+    private String maSB;
+    private String tenSB;
+    private String tinhTP;
 
-	    // Default Constructor
-	    public SanBayDTO() {}
+    public SanBayDTO() {}
 
-	    // Parameterized Constructor
-	    public SanBayDTO(String maSanBay, String tenSanBay, String thanhPho) {
-	        this.maSanBay = maSanBay;
-	        this.tenSanBay = tenSanBay;
-	        this.thanhPho = thanhPho;
-	    }
+    public SanBayDTO(String maSB, String tenSB, String tinhTP) {
+        this.maSB = maSB;
+        this.tenSB = tenSB;
+        this.tinhTP = tinhTP;
+    }
 
-	    // Getters and Setters
-	    public String getMaSanBay() { return maSanBay; }
-	    public void setMaSanBay(String maSanBay) { this.maSanBay = maSanBay; }
+    public String getMaSB() { return maSB; }
+    public void setMaSB(String maSB) { this.maSB = maSB; }
 
-	    public String getTenSanBay() { return tenSanBay; }
-	    public void setTenSanBay(String tenSanBay) { this.tenSanBay = tenSanBay; }
+    public String getTenSB() { return tenSB; }
+    public void setTenSB(String tenSB) { this.tenSB = tenSB; }
 
-	    public String getThanhPho() { return thanhPho; }
-	    public void setThanhPho(String thanhPho) { this.thanhPho = thanhPho; }
-	}
-	
+    public String getTinhTP() { return tinhTP; }
+    public void setTinhTP(String tinhTP) { this.tinhTP = tinhTP; }
 
+    @Override
+    public String toString() {
+        return "SanBayDTO{maSB='" + maSB + "', tenSB='" + tenSB + "', tinhTP='" + tinhTP + "'}";
+    }
+}
