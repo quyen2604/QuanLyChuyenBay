@@ -25,12 +25,12 @@ public class Main {
             System.out.println("--------------------------------------------------");
             
             // Loop through the Data Transfer Objects (DTO)
-            for (SanBayDTO sb : danhSachSanBay) {
-                System.out.printf("%-12s | %-30s | %-20s\n", 
-                    sb.getMaSanBay(), 
-                    sb.getTenSanBay(), 
-                    sb.getThanhPho());
-            }
+//            for (SanBayDTO sb : danhSachSanBay) {
+//                System.out.printf("%-12s | %-30s | %-20s\n", 
+//                    sb.getMaSanBay(), 
+//                    sb.getTenSanBay(), 
+//                    sb.getThanhPho());
+//            }
             System.out.println("--------------------------------------------------");
         }
         
