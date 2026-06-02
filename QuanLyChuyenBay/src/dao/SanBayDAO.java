@@ -29,5 +29,30 @@ public class SanBayDAO {
 	    return list;
 	}
 
-    
+	 public boolean update(SanBayDTO dto) {
+	        String sql = "UPDATE SAN_BAY SET TenSB=?, TinhTP=? WHERE MaSB=?";
+	        try (Connection con = DatabaseConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, dto.getTenSB());
+	            ps.setString(2, dto.getTinhTP());
+	            ps.setString(3, dto.getMaSB());
+	            return ps.executeUpdate() > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
+	    public boolean delete(String maSB) {
+	        String sql = "DELETE FROM SAN_BAY WHERE MaSB=?";
+	        try (Connection con = DatabaseConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, maSB);
+	            return ps.executeUpdate() > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
 }

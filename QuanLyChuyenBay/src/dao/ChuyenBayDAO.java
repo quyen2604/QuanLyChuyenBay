@@ -32,5 +32,33 @@ public class ChuyenBayDAO {
 	    return list;
 	}
 
-    
+	public boolean update(ChuyenBayDTO dto) {
+        String sql = "UPDATE CHUYEN_BAY SET GioKH=?, NgayKH=?, SBDen=?, SBDi=?, MaMB=? WHERE MaCB=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTime(1, dto.getGioKH());
+            ps.setDate(2, new java.sql.Date(dto.getNgayKH().getTime()));
+            ps.setString(3, dto.getSBDen());
+            ps.setString(4, dto.getSBDi());
+            ps.setString(5, dto.getMaMB());
+            ps.setString(6, dto.getMaCB());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maCB) {
+        String sql = "DELETE FROM CHUYEN_BAY WHERE MaCB=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maCB);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

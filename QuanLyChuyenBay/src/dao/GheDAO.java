@@ -29,4 +29,32 @@ public class GheDAO {
 	    }
 	    return list;
 	}
+	
+	public boolean update(GheDTO dto) {
+        String sql = "UPDATE GHE SET MaMB=?, SoGhe=?, MaLoaiVe=? WHERE MaGhe=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, dto.getMaMB());
+            ps.setString(2, dto.getSoGhe());
+            ps.setString(3, dto.getMaLoaiVe());
+            ps.setString(4, dto.getMaGhe());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maGhe) {
+        String sql = "DELETE FROM GHE WHERE MaGhe=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maGhe);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
