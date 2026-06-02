@@ -28,4 +28,33 @@ public class ChiTietDichVuLoaiVeDAO {
 	    }
 	    return list;
 	}
+
+	public boolean update(ChiTietDichVuLoaiVeDTO dto) {
+        String sql = "UPDATE CHITIET_DICHVU_LOAIVE SET SoLuong=? WHERE MaLoaiVe=? AND MaDV=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, dto.getSoLuong());
+            ps.setString(2, dto.getMaLoaiVe());
+            ps.setString(3, dto.getMaDV());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maLoaiVe, String maDV) {
+        String sql = "DELETE FROM CHITIET_DICHVU_LOAIVE WHERE MaLoaiVe=? AND MaDV=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maLoaiVe);
+            ps.setString(2, maDV);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

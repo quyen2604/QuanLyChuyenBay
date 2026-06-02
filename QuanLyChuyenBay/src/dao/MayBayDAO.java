@@ -29,4 +29,32 @@ public class MayBayDAO {
 	    return list;
 	}
   
+
+	public boolean update(MayBayDTO dto) {
+        String sql = "UPDATE MAY_BAY SET TenMayBay=?, TongSoGhe=?, MaLoai=? WHERE MaMB=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, dto.getTenMayBay());
+            ps.setInt(2, dto.getTongSoGhe());
+            ps.setString(3, dto.getMaLoai());
+            ps.setString(4, dto.getMaMB());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maMB) {
+        String sql = "DELETE FROM MAY_BAY WHERE MaMB=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maMB);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

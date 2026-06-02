@@ -29,6 +29,33 @@ public class DichVuDAO {
 	    return list;
 	}
 	 
-	 
+
+	public boolean update(DichVuDTO dto) {
+        String sql = "UPDATE DICH_VU SET TenDichVu=?, GiaDichVu=? WHERE MaDV=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, dto.getTenDichVu());
+            ps.setDouble(2, dto.getGiaDichVu());
+            ps.setString(3, dto.getMaDV());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maDV) {
+        String sql = "DELETE FROM DICH_VU WHERE MaDV=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maDV);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+ 
+
 
 }

@@ -29,4 +29,32 @@ public class HoaDonDAO {
 	    }
 	    return list;
 	}
+
+	 public boolean update(HoaDonDTO dto) {
+	        String sql = "UPDATE HOA_DON SET MaKH=?, NgayLapHD=?, ThanhTien=? WHERE MaHD=?";
+	        try (Connection con = DatabaseConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, dto.getMaKH());
+	            ps.setDate(2, new java.sql.Date(dto.getNgayLapHD().getTime()));
+	            ps.setDouble(3, dto.getThanhTien());
+	            ps.setString(4, dto.getMaHD());
+	            return ps.executeUpdate() > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
+	    public boolean delete(String maHD) {
+	        String sql = "DELETE FROM HOA_DON WHERE MaHD=?";
+	        try (Connection con = DatabaseConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, maHD);
+	            return ps.executeUpdate() > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
 }

@@ -28,5 +28,30 @@ public class LoaiVeDAO {
 	    return list;
 	}
 
-    
+	public boolean update(LoaiVeDTO dto) {
+        String sql = "UPDATE LOAI_VE SET TenLoai=? WHERE MaLoaiVe=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, dto.getTenLoai());
+            ps.setString(2, dto.getMaLoaiVe());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String maLoaiVe) {
+        String sql = "DELETE FROM LOAI_VE WHERE MaLoaiVe=?";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maLoaiVe);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
