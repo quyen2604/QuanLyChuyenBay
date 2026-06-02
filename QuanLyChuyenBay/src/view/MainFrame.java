@@ -7,6 +7,12 @@ public class MainFrame extends JFrame {
     
     //  Sub-Panels 
     private JPanel currentPanel;
+    private JPanel sidebar;
+    private JPanel mainContentPanel; // Vùng đệm ở giữa để thay đổi các màn hình
+
+    // Khai báo các Panel chức năng
+    private ChuyenBayPanel chuyenBayPanel;
+    private DanhMucHeThongPanel danhMucPanel;
     
     public MainFrame() {
         // 1. Setup basic configurations 
@@ -24,25 +30,54 @@ public class MainFrame extends JFrame {
     }
     
     private void initSidebar() {
-        // Nơi chứa các nút bấm chuyển màn hình (Quản lý chuyến bay, Khách hàng, Hóa đơn...)
-        JPanel sidebar = new JPanel();
+        sidebar = new JPanel();
         sidebar.setBackground(Color.DARK_GRAY);
         sidebar.setPreferredSize(new Dimension(250, 700));
+        sidebar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20)); 
         
-        // TODO: Em sẽ thêm các JButton vào đây sau
+        JButton btnChuyenBay = new JButton("Quản Lý Chuyến Bay");
+        JButton btnDanhMuc = new JButton("Danh Mục Hệ Thống");
         
-        add(sidebar, BorderLayout.WEST); // Đặt sidebar nằm bên trái
+        Dimension btnSize = new Dimension(200, 40);
+        btnChuyenBay.setPreferredSize(btnSize);
+        btnDanhMuc.setPreferredSize(btnSize);
+        
+        sidebar.add(btnChuyenBay);
+        sidebar.add(btnDanhMuc);
+        
+        // Đẩy thanh menu vào đúng vị trí WEST của Frame
+        add(sidebar, BorderLayout.WEST); 
+        
+        // 🎯 BẮT SỰ KIỆN: Lúc này các nút bấm chỉ việc gọi biến toàn cục "mainContentPanel" ra để xử lý
+        btnChuyenBay.addActionListener(e -> {
+            mainContentPanel.removeAll(); 
+            mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER); 
+            mainContentPanel.revalidate(); 
+            mainContentPanel.repaint();
+        });
+        
+        btnDanhMuc.addActionListener(e -> {
+            mainContentPanel.removeAll(); 
+            mainContentPanel.add(danhMucPanel, BorderLayout.CENTER); 
+            
+            // Tự động load mới dữ liệu khi click đổi sang tab danh mục
+            danhMucPanel.loadAllData(); 
+            
+            mainContentPanel.revalidate(); 
+            mainContentPanel.repaint();
+        });
     }
     
     private void initMainContent() {
         // Vùng trung tâm hiển thị nội dung chi tiết của từng chức năng
-        JPanel mainContent = new JPanel(new BorderLayout());
+    	mainContentPanel = new JPanel(new BorderLayout());
         
      // Nhúng thử ChuyenBayPanel vào vùng trung tâm của MainFrame để test
-         currentPanel = new ChuyenBayPanel(); 
-         mainContent.add(currentPanel, BorderLayout.CENTER);
+    	chuyenBayPanel = new ChuyenBayPanel(); 
+    	danhMucPanel = new DanhMucHeThongPanel();
+         mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER);
         
-        add(mainContent, BorderLayout.CENTER); // Đặt vùng nội dung ở giữa
+        add(mainContentPanel, BorderLayout.CENTER); // Đặt vùng nội dung ở giữa
     }
     
     public static void main(String[] args) {
