@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import util.DatabaseConnection;
 
 public class CSVLoader {
-    private static final String CSV_DIR = "C:\\Users\\Trang\\Downloads\\file_csv_CSDL\\";
+    private static final String CSV_DIR = "D:\\NAM2_HK2\\CSDL\\Doc\\file_csv_CSDL\\";
     private static final Charset CSV_ENCODING = StandardCharsets.UTF_8;
  
     // ============================================================
