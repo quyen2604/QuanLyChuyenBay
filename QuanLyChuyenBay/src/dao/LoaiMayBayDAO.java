@@ -28,6 +28,7 @@ public class LoaiMayBayDAO {
 	    return list;
 	}
 
+
 	public boolean update(LoaiMayBayDTO dto) {
         String sql = "UPDATE LOAI_MAY_BAY SET HangSX=? WHERE MaLoai=?";
         try (Connection con = DatabaseConnection.getConnection();
@@ -52,5 +53,6 @@ public class LoaiMayBayDAO {
             return false;
         }
     }
+
 
 }

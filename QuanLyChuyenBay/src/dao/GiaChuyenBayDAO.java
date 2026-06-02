@@ -28,6 +28,7 @@ public class GiaChuyenBayDAO {
 	    }
 	    return list;
 	}
+
 	public boolean update(GiaChuyenBayDTO dto) {
         String sql = "UPDATE GIA_CHUYEN_BAY SET GiaTien=? WHERE MaCB=? AND MaLoaiVe=?";
         try (Connection con = DatabaseConnection.getConnection();
@@ -54,5 +55,6 @@ public class GiaChuyenBayDAO {
             return false;
         }
     }
+
 
 }

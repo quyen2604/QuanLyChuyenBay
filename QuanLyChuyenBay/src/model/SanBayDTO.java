@@ -22,8 +22,11 @@ public class SanBayDTO {
     public String getTinhTP() { return tinhTP; }
     public void setTinhTP(String tinhTP) { this.tinhTP = tinhTP; }
 
+
     @Override
     public String toString() {
         return "SanBayDTO{maSB='" + maSB + "', tenSB='" + tenSB + "', tinhTP='" + tinhTP + "'}";
     }
+
 }
+

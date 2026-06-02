@@ -29,6 +29,7 @@ public class GheDAO {
 	    }
 	    return list;
 	}
+
 	
 	public boolean update(GheDTO dto) {
         String sql = "UPDATE GHE SET MaMB=?, SoGhe=?, MaLoaiVe=? WHERE MaGhe=?";
@@ -56,5 +57,6 @@ public class GheDAO {
             return false;
         }
     }
+
 
 }

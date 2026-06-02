@@ -1,0 +1,9 @@
+# 1. Bỏ qua tất cả mọi thứ trong thư mục dự án
+*
+
+# 2. Nhưng KHÔNG bỏ qua file .gitignore này
+!.gitignore
+
+# 3. Và KHÔNG bỏ qua thư mục src cùng toàn bộ code bên trong nó
+!src/
+!src/**

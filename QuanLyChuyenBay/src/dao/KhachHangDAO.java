@@ -30,6 +30,7 @@ public class KhachHangDAO {
 	    }
 	    return list;
 	}
+
 	 public boolean update(KhachHangDTO dto) {
 	        String sql = "UPDATE KHACH_HANG SET HoTen=?, SDT=?, CCCD=?, DiaChi=? WHERE MaKH=?";
 	        try (Connection con = DatabaseConnection.getConnection();
@@ -57,5 +58,6 @@ public class KhachHangDAO {
 	            return false;
 	        }
 	    }
+
 
 }

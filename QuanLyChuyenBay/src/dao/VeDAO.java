@@ -31,7 +31,7 @@ public class VeDAO {
 	    }
 	    return list;
 	}
-	 public boolean update(VeDTO dto) {
+	public boolean update(VeDTO dto) {
 	        String sql = "UPDATE VE SET MaCB=?, NgayDatVe=?, MaHoaDon=?, NgayNhanVe=?, MaGhe=? WHERE MaVe=?";
 	        try (Connection con = DatabaseConnection.getConnection();
 	             PreparedStatement ps = con.prepareStatement(sql)) {
@@ -59,5 +59,6 @@ public class VeDAO {
 	            return false;
 	        }
 	    }
+
 
 }

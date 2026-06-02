@@ -29,6 +29,7 @@ public class HoaDonDAO {
 	    }
 	    return list;
 	}
+
 	 public boolean update(HoaDonDTO dto) {
 	        String sql = "UPDATE HOA_DON SET MaKH=?, NgayLapHD=?, ThanhTien=? WHERE MaHD=?";
 	        try (Connection con = DatabaseConnection.getConnection();

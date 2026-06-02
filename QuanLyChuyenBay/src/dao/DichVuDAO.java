@@ -29,6 +29,7 @@ public class DichVuDAO {
 	    return list;
 	}
 	 
+
 	public boolean update(DichVuDTO dto) {
         String sql = "UPDATE DICH_VU SET TenDichVu=?, GiaDichVu=? WHERE MaDV=?";
         try (Connection con = DatabaseConnection.getConnection();
@@ -55,5 +56,6 @@ public class DichVuDAO {
         }
     }
  
+
 
 }

@@ -29,6 +29,7 @@ public class MayBayDAO {
 	    return list;
 	}
   
+
 	public boolean update(MayBayDTO dto) {
         String sql = "UPDATE MAY_BAY SET TenMayBay=?, TongSoGhe=?, MaLoai=? WHERE MaMB=?";
         try (Connection con = DatabaseConnection.getConnection();

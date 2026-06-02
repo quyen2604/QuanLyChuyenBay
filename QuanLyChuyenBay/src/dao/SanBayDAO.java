@@ -1,3 +1,4 @@
+
 package dao;
 
 import model.SanBayDTO;
@@ -29,6 +30,7 @@ public class SanBayDAO {
 	    return list;
 	}
 
+
 	 public boolean update(SanBayDTO dto) {
 	        String sql = "UPDATE SAN_BAY SET TenSB=?, TinhTP=? WHERE MaSB=?";
 	        try (Connection con = DatabaseConnection.getConnection();
@@ -54,5 +56,6 @@ public class SanBayDAO {
 	            return false;
 	        }
 	    }
+
 
 }

@@ -28,6 +28,7 @@ public class ChiTietDichVuLoaiVeDAO {
 	    }
 	    return list;
 	}
+
 	public boolean update(ChiTietDichVuLoaiVeDTO dto) {
         String sql = "UPDATE CHITIET_DICHVU_LOAIVE SET SoLuong=? WHERE MaLoaiVe=? AND MaDV=?";
         try (Connection con = DatabaseConnection.getConnection();
@@ -54,5 +55,6 @@ public class ChiTietDichVuLoaiVeDAO {
             return false;
         }
     }
+
 
 }
