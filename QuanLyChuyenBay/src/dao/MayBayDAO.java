@@ -56,5 +56,20 @@ public class MayBayDAO {
             return false;
         }
     }
+ // --- Hàm THÊM MÁY BAY MỚI ---
+    public boolean insert(MayBayDTO mb) {
+        String sql = "INSERT INTO MAY_BAY (MaMB, TenMayBay, TongSoGhe, MaLoai) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, mb.getMaMB());
+            ps.setString(2, mb.getTenMayBay());
+            ps.setInt(3, mb.getTongSoGhe());
+            ps.setString(4, mb.getMaLoai());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

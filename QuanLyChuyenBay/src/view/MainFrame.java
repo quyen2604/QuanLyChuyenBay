@@ -6,13 +6,13 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     
     //  Sub-Panels 
-    private JPanel currentPanel;
     private JPanel sidebar;
     private JPanel mainContentPanel; // Vùng đệm ở giữa để thay đổi các màn hình
 
     // Khai báo các Panel chức năng
     private ChuyenBayPanel chuyenBayPanel;
     private DanhMucHeThongPanel danhMucPanel;
+    private MayBayPanel mayBayPanel;
     
     public MainFrame() {
         // 1. Setup basic configurations 
@@ -37,13 +37,16 @@ public class MainFrame extends JFrame {
         
         JButton btnChuyenBay = new JButton("Quản Lý Chuyến Bay");
         JButton btnDanhMuc = new JButton("Danh Mục Hệ Thống");
+        JButton btnMayBay = new JButton("Quản Lý Máy Bay");
         
         Dimension btnSize = new Dimension(200, 40);
         btnChuyenBay.setPreferredSize(btnSize);
         btnDanhMuc.setPreferredSize(btnSize);
+        btnMayBay.setPreferredSize(btnSize);
         
         sidebar.add(btnChuyenBay);
         sidebar.add(btnDanhMuc);
+        sidebar.add(btnMayBay); // Thêm nút vào sidebar
         
         // Đẩy thanh menu vào đúng vị trí WEST của Frame
         add(sidebar, BorderLayout.WEST); 
@@ -66,6 +69,15 @@ public class MainFrame extends JFrame {
             mainContentPanel.revalidate(); 
             mainContentPanel.repaint();
         });
+        
+
+        // Bắt sự kiện click đổi màn hình
+        btnMayBay.addActionListener(e -> {
+            mainContentPanel.removeAll();
+            mainContentPanel.add(mayBayPanel, BorderLayout.CENTER);
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
+        });
     }
     
     private void initMainContent() {
@@ -75,20 +87,11 @@ public class MainFrame extends JFrame {
      // Nhúng thử ChuyenBayPanel vào vùng trung tâm của MainFrame để test
     	chuyenBayPanel = new ChuyenBayPanel(); 
     	danhMucPanel = new DanhMucHeThongPanel();
-         mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER);
+    	mayBayPanel = new MayBayPanel();
+        mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER);
         
         add(mainContentPanel, BorderLayout.CENTER); // Đặt vùng nội dung ở giữa
     }
     
-    public static void main(String[] args) {
-        // Chạy UI trong Thread đặc biệt của Swing để đảm bảo Thread-safety (An toàn luồng)
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame();
-                frame.setVisible(true); // Chính thức hiển thị màn hình lên
-            }
-        });
-    }
     
 }
