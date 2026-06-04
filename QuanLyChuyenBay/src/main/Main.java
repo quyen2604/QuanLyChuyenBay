@@ -6,16 +6,16 @@ import service.CSVLoader;
 import view.MainFrame;
 
 public class Main {
-	public static void main(String[] args) {
-        // Chạy UI trong Thread đặc biệt của Swing để đảm bảo Thread-safety (An toàn luồng)
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame();
-                frame.setVisible(true); // Chính thức hiển thị màn hình lên
-            }
-        });
-    }
+//	public static void main(String[] args) {
+//        // Chạy UI trong Thread đặc biệt của Swing để đảm bảo Thread-safety (An toàn luồng)
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                MainFrame frame = new MainFrame();
+//                frame.setVisible(true); // Chính thức hiển thị màn hình lên
+//            }
+//        });
+//    }
 //    public static void main(String[] args) {
 //        System.out.println("=== BAT DAU TEST CHUC NANG LOAD CSV ===");
 //     

@@ -8,11 +8,11 @@ import java.sql.Statement;
 public class DatabaseConnection {
 	 
     // SUA LAI theo may cua ban
-    private static final String SERVER   = "localhost";
+    private static final String SERVER   = "LENOVO-15IIL05";
     private static final String PORT     = "1433";
     private static final String DB_DWH   = "QuanLyChuyenBay";
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "123456"; 
+    private static final String PASSWORD = "sang2003"; 
  
     private static Connection connection = null;
  
