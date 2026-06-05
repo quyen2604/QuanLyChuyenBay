@@ -86,7 +86,7 @@ public class MasterETL {
 
         // 📂 Đường dẫn đến thư mục chứa toàn bộ các file .csv của em trên máy tính
         // Em có thể sửa lại đường dẫn này theo đúng thực tế máy của em (Ví dụ: "D:\\DoAn\\Data")
-        String dataFolder = "D:\\\\NAM2_HK2\\\\CSDL\\\\Doc\\\\file_csv_CSDL\\\\"; 
+        String dataFolder = "C:\\Users\\Public\\"; 
 
         System.out.println("🚀 BẮT ĐẦU TIẾN TRÌNH TỰ ĐỘNG LOAD TOÀN BỘ DATABASE...");
         long startTime = System.currentTimeMillis();

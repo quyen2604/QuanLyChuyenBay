@@ -12,7 +12,7 @@ public class DatabaseConnection {
     private static final String PORT     = "1433";
     private static final String DB_DWH   = "QuanLyChuyenBay";
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "123456"; 
+    private static final String PASSWORD = "123456789"; 
  
     private static Connection connection = null;
  
