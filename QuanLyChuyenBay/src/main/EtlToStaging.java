@@ -67,7 +67,10 @@ public class EtlToStaging {
             }
 
             long endTime = System.currentTimeMillis();
-            System.out.println("\n🎉 HOÀN TẤT TOÀN BỘ TIẾN TRÌNH TRONG: " + (endTime - startTime) + " ms");
+            System.out.println("\n🎉 HOÀN TẤT TOÀN BỘ TIẾN TRÌNH STAGING TRONG: " + (endTime - startTime) + " ms");
+
+            // 4. KÍCH HOẠT CHUỖI NẠP DIMENSION & FACT TỪ SP
+            EtlToDimensionFact.runProcess(connDWH);
 
         } catch (SQLException e) {
             System.err.println("❌ LỖI HỆ THỐNG: " + e.getMessage());
