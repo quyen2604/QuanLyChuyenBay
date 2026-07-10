@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import util.ConnectionManager;
 import util.DatabaseConnection;
 
 public class MasterETL {
@@ -92,7 +94,11 @@ public class MasterETL {
         long startTime = System.currentTimeMillis();
         
         // Mở kết nối Database thông qua Class Utility thực tế của em
-        try (Connection conn = DatabaseConnection.getConnection()) { 
+        ConnectionManager.init();
+        Connection conn = null;
+
+        try  { 
+        	conn = DatabaseConnection.getConnection();
             
             int successCount = 0;
             
@@ -112,9 +118,6 @@ public class MasterETL {
             
         } catch (SQLException e) {
             System.err.println("❌ LỖI KẾT NỐI DATABASE TỔNG THỂ: " + e.getMessage());
-        } finally {
-            // Đảm bảo đóng kết nối an toàn để giải phóng tài nguyên hệ thống
-            DatabaseConnection.closeConnection(); 
-        }
+        } 
     }
 }
