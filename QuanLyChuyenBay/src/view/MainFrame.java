@@ -2,96 +2,133 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     
-    //  Sub-Panels 
+    // Sub-Panels 
     private JPanel sidebar;
     private JPanel mainContentPanel; // Vùng đệm ở giữa để thay đổi các màn hình
 
-    // Khai báo các Panel chức năng
+    // Khai báo các Panel chức năng OLTP
     private ChuyenBayPanel chuyenBayPanel;
     private DanhMucHeThongPanel danhMucPanel;
     private MayBayPanel mayBayPanel;
     
+    // Khai báo các Panel chức năng DWH
+    private EtlControlPanel etlControlPanel;
+    private DimensionViewerPanel dimensionViewerPanel;
+    private FactViewerPanel factViewerPanel;
+    
     public MainFrame() {
         // 1. Setup basic configurations 
-        setTitle("HỆ THỐNG QUẢN LÝ CHUYẾN BAY");
-        setSize(1200, 700); 
-        setLocationRelativeTo(null); // Căn giữa màn hình khi hiển thị
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Tắt hẳn app khi bấm X
+        setTitle("HỆ THỐNG QUẢN LÝ CHUYẾN BAY & DWH ENTERPRISE");
+        setSize(1300, 800); 
+        setLocationRelativeTo(null); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         
         // 2. Setup Layout cho Frame
         setLayout(new BorderLayout());
         
-        // 3. Initialize components (Khởi tạo các thành phần giao diện)
+        // 3. Initialize components
+        initMainContent(); // Khởi tạo nội dung trước để truyền vào sự kiện
         initSidebar();
-        initMainContent();
     }
     
     private void initSidebar() {
         sidebar = new JPanel();
-        sidebar.setBackground(Color.DARK_GRAY);
-        sidebar.setPreferredSize(new Dimension(250, 700));
-        sidebar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20)); 
+        sidebar.setBackground(new Color(44, 62, 80)); // Màu Dark Blue cổ điển
+        sidebar.setPreferredSize(new Dimension(280, 800));
+        sidebar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 15)); 
         
-        JButton btnChuyenBay = new JButton("Quản Lý Chuyến Bay");
-        JButton btnDanhMuc = new JButton("Danh Mục Hệ Thống");
-        JButton btnMayBay = new JButton("Quản Lý Máy Bay");
-        
-        Dimension btnSize = new Dimension(200, 40);
-        btnChuyenBay.setPreferredSize(btnSize);
-        btnDanhMuc.setPreferredSize(btnSize);
-        btnMayBay.setPreferredSize(btnSize);
+        Dimension btnSize = new Dimension(240, 40);
+        Font headerFont = new Font("Arial", Font.BOLD, 14);
+        Color headerColor = new Color(236, 240, 241);
+
+        // ================= KHU VỰC OLTP =================
+        JLabel lblOltp = new JLabel("--- HỆ THỐNG OLTP ---");
+        lblOltp.setForeground(headerColor);
+        lblOltp.setFont(headerFont);
+        sidebar.add(lblOltp);
+
+        JButton btnChuyenBay = createSidebarButton("📝 Quản Lý Chuyến Bay", btnSize);
+        JButton btnMayBay = createSidebarButton("✈️ Quản Lý Máy Bay", btnSize);
+        JButton btnDanhMuc = createSidebarButton("🗂️ Danh Mục Hệ Thống", btnSize);
         
         sidebar.add(btnChuyenBay);
-        sidebar.add(btnDanhMuc);
-        sidebar.add(btnMayBay); // Thêm nút vào sidebar
+        sidebar.add(btnMayBay);
+        sidebar.add(btnDanhMuc); 
+
+        // Khoảng cách
+        sidebar.add(Box.createVerticalStrut(20));
+
+        // ================= KHU VỰC DWH & ETL =================
+        JLabel lblDwh = new JLabel("--- DATA WAREHOUSE ---");
+        lblDwh.setForeground(headerColor);
+        lblDwh.setFont(headerFont);
+        sidebar.add(lblDwh);
+
+        JButton btnEtl = createSidebarButton("⚙️ Điều Khiển ETL", btnSize);
+        btnEtl.setBackground(new Color(39, 174, 96)); // Nhấn mạnh nút ETL
+        
+        JButton btnDim = createSidebarButton("🧊 Xem Dimension", btnSize);
+        JButton btnFact = createSidebarButton("📈 Xem Thống Kê Fact", btnSize);
+
+        sidebar.add(btnEtl);
+        sidebar.add(btnDim);
+        sidebar.add(btnFact);
         
         // Đẩy thanh menu vào đúng vị trí WEST của Frame
         add(sidebar, BorderLayout.WEST); 
         
-        // 🎯 BẮT SỰ KIỆN: Lúc này các nút bấm chỉ việc gọi biến toàn cục "mainContentPanel" ra để xử lý
-        btnChuyenBay.addActionListener(e -> {
-            mainContentPanel.removeAll(); 
-            mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER); 
-            mainContentPanel.revalidate(); 
-            mainContentPanel.repaint();
-        });
-        
+        // ================= SỰ KIỆN CLICK OLTP =================
+        btnChuyenBay.addActionListener(e -> switchPanel(chuyenBayPanel));
+        btnMayBay.addActionListener(e -> switchPanel(mayBayPanel));
         btnDanhMuc.addActionListener(e -> {
-            mainContentPanel.removeAll(); 
-            mainContentPanel.add(danhMucPanel, BorderLayout.CENTER); 
-            
-            // Tự động load mới dữ liệu khi click đổi sang tab danh mục
-            danhMucPanel.loadAllData(); 
-            
-            mainContentPanel.revalidate(); 
-            mainContentPanel.repaint();
+            switchPanel(danhMucPanel);
+            danhMucPanel.loadAllData(); // Tự động load mới dữ liệu khi click
         });
         
+        // ================= SỰ KIỆN CLICK DWH =================
+        btnEtl.addActionListener(e -> switchPanel(etlControlPanel));
+        btnDim.addActionListener(e -> switchPanel(dimensionViewerPanel));
+        btnFact.addActionListener(e -> switchPanel(factViewerPanel));
+    }
 
-        // Bắt sự kiện click đổi màn hình
-        btnMayBay.addActionListener(e -> {
-            mainContentPanel.removeAll();
-            mainContentPanel.add(mayBayPanel, BorderLayout.CENTER);
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-        });
+    private JButton createSidebarButton(String text, Dimension size) {
+        JButton btn = new JButton(text);
+        btn.setPreferredSize(size);
+        btn.setFont(new Font("Arial", Font.BOLD, 13));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+    
+    // Hàm hỗ trợ chuyển đổi màn hình mượt mà
+    private void switchPanel(JPanel panel) {
+        mainContentPanel.removeAll(); 
+        mainContentPanel.add(panel, BorderLayout.CENTER); 
+        mainContentPanel.revalidate(); 
+        mainContentPanel.repaint();
     }
     
     private void initMainContent() {
-        // Vùng trung tâm hiển thị nội dung chi tiết của từng chức năng
-    	mainContentPanel = new JPanel(new BorderLayout());
+        // Vùng trung tâm hiển thị nội dung chi tiết
+        mainContentPanel = new JPanel(new BorderLayout());
         
-     // Nhúng thử ChuyenBayPanel vào vùng trung tâm của MainFrame để test
-    	chuyenBayPanel = new ChuyenBayPanel(); 
-    	danhMucPanel = new DanhMucHeThongPanel();
-    	mayBayPanel = new MayBayPanel();
+        // Khởi tạo các module OLTP
+        chuyenBayPanel = new ChuyenBayPanel(); 
+        danhMucPanel = new DanhMucHeThongPanel();
+        mayBayPanel = new MayBayPanel();
+
+        // Khởi tạo các module DWH
+        etlControlPanel = new EtlControlPanel();
+        dimensionViewerPanel = new DimensionViewerPanel();
+        factViewerPanel = new FactViewerPanel();
+
+        // Mặc định hiển thị màn hình Chuyến Bay (OLTP)
         mainContentPanel.add(chuyenBayPanel, BorderLayout.CENTER);
         
-        add(mainContentPanel, BorderLayout.CENTER); // Đặt vùng nội dung ở giữa
+        add(mainContentPanel, BorderLayout.CENTER); 
     }
-    
-    
 }
